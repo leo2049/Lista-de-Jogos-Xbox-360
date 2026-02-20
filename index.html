@@ -1,64 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Seleção de Jogos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Jogos Xbox 360</title>
+
 <style>
 body {
-  font-family: Arial;
-  padding: 20px;
-  background: #f4f4f4;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: white;
+    text-align: center;
 }
-h2 {
-  margin-top: 30px;
+
+h1 {
+    background-color: #107c10;
+    padding: 15px;
+    margin: 0;
 }
+
 .container {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
+    padding: 15px;
 }
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 5px;
+    border: none;
 }
+
+#contador {
+    margin: 10px;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game {
+    background-color: #1e1e1e;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 45%;
+    max-width: 250px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.game:hover {
+    border: 2px solid #00ff88;
+}
+
+.game.selected {
+    background-color: #107c10;
+    border: 2px solid #00ff88;
+}
+
 button {
-  padding: 12px;
-  width: 100%;
-  font-size: 16px;
-  background: #28a745;
-  color: white;
-  border: none;
-  border-radius: 8px;
+    background-color: #107c10;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    cursor: pointer;
 }
+
 button:hover {
-  background: #218838;
-}
-.lista-jogos {
-  columns: 2;
-}
-label {
-  display: block;
-  margin-bottom: 5px;
+    background-color: #0b5e0b;
 }
 </style>
 </head>
+
 <body>
+
+<h1>Lista de Jogos Xbox 360</h1>
 
 <div class="container">
 
-<h1>Selecione os Jogos</h1>
+<input type="text" id="cliente" placeholder="Nome do Cliente">
+<input type="text" id="whatsapp" placeholder="WhatsApp">
 
-<label>Nome do Cliente:</label>
-<input type="text" id="nome">
+<div id="contador">Jogos selecionados: 0</div>
 
-<label>WhatsApp:</label>
-<input type="text" id="whats">
+<div class="games" id="games"></div>
 
-<h2>Jogos Disponíveis</h2>
+<button onclick="gerarTXT()">Gerar TXT</button>
 
-<div class="lista-jogos">
+</div>
+
 <script>
+
 const jogos = [
 "Ac Brotherhood",
 "Ac Revelations",
@@ -224,38 +266,48 @@ const jogos = [
 "Yaiba Ninja Gaiden Z"
 ];
 
+jogos.sort();
+
+const container = document.getElementById("games");
+
 jogos.forEach(jogo => {
-  document.write(`<label><input type="checkbox" value="${jogo}"> ${jogo}</label>`);
+    const div = document.createElement("div");
+    div.className = "game";
+    div.innerText = jogo;
+    div.onclick = function() {
+        div.classList.toggle("selected");
+        atualizarContador();
+    };
+    container.appendChild(div);
 });
-</script>
-</div>
 
-<br><br>
-<button onclick="gerarLista()">Gerar Lista</button>
-
-</div>
-
-<script>
-function gerarLista() {
-  const nome = document.getElementById("nome").value;
-  const whats = document.getElementById("whats").value;
-  const selecionados = document.querySelectorAll('input[type=checkbox]:checked');
-  
-  let texto = "Pedido de Jogos\n\n";
-  texto += "Nome: " + nome + "\n";
-  texto += "WhatsApp: " + whats + "\n\n";
-  texto += "Jogos Selecionados:\n\n";
-
-  selecionados.forEach((item, index) => {
-    texto += (index + 1) + " - " + item.value + "\n";
-  });
-
-  let blob = new Blob([texto], { type: "text/plain" });
-  let link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "pedido_de_jogos.txt";
-  link.click();
+function atualizarContador() {
+    const selecionados = document.querySelectorAll(".selected").length;
+    document.getElementById("contador").innerText =
+        "Jogos selecionados: " + selecionados;
 }
+
+function gerarTXT() {
+    const cliente = document.getElementById("cliente").value;
+    const whatsapp = document.getElementById("whatsapp").value;
+
+    const selecionados = document.querySelectorAll(".selected");
+
+    let texto = "Cliente: " + cliente + "\n";
+    texto += "WhatsApp: " + whatsapp + "\n\n";
+    texto += "Jogos Selecionados:\n";
+
+    selecionados.forEach(jogo => {
+        texto += "- " + jogo.innerText + "\n";
+    });
+
+    const blob = new Blob([texto], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "pedido.txt";
+    link.click();
+}
+
 </script>
 
 </body>
