@@ -31,17 +31,7 @@ body {
     object-fit: cover;
 }
 
-#pularBtn {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-    background: rgba(0,0,0,0.6);
-    border: 2px solid #00ff88;
-    color: #00ff88;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 6px;
-}
+
 
 /* CONTEÚDO */
 #conteudo {
@@ -101,12 +91,19 @@ input {
 }
 
 button {
-    background-color: #107c10;
-    color: white;
+    background-color: transparent;
+    color: #00ff88;
     padding: 12px 25px;
-    border: none;
+    border: 2px solid #00ff88;
     border-radius: 5px;
     cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: rgba(0, 255, 136, 0.1);
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
 }
 </style>
 </head>
@@ -118,7 +115,6 @@ button {
     <video id="videoIntro" autoplay muted>
         <source src="startup.mp4" type="video/mp4">
     </video>
-    <button id="pularBtn" onclick="fecharIntro()">Pular</button>
 </div>
 
 <!-- CONTEÚDO PRINCIPAL -->
@@ -136,7 +132,7 @@ button {
 <div class="games" id="games"></div>
 
 <br>
-<button onclick="copiarTexto()">📋 Copiar para WhatsApp</button>
+<button onclick="copiarTexto()">📋 Copie e Cole no WhatsApp</button>
 
 </div>
 </div>
@@ -160,25 +156,165 @@ const jogos = [
 "Ac Brotherhood",
 "Ac Revelations",
 "Air Conflicts Vietnam",
-"Assassin’s Creed",
-"Assassin’s Creed Ii",
-"Assassin’s Creed Rogue",
+"Alice Madness Returns Pt-Br",
+"Alone In The Dark",
+"Angry Birds Trilogy",
+"Army Of Two - The Devil's Cartel",
+"Assassin's Creed",
+"Assassin's Creed 4 Black Flag",
+"Assassin's Creed Ii",
+"Assassin's Creed Rogue",
+"Banjo-Kazooie Nuts & Bolts",
+"Barbie & Her Sisters Puppy Rescue",
 "Batman Arkcity Goty",
+"Battlefield - Bad Company 2",
 "Battlefield 4",
+"Bayonetta",
+"Bioshock 2",
+"Burnout 3",
 "Call Of Duty Black Ops 2 Ptbr",
+"Call Of Duty Black Ops 3",
+"Call Of Duty Modern Warfare 3",
+"Call Of Juarez Bound In Blood",
+"Capcom Digital Collection",
+"Castle Of Illusion",
+"Cod Advanced Warfare Pt-Br",
+"Copa Do Mundo Fifa 14 Pt-Br",
+"Crash Of The Titans",
+"Dante's Inferno",
 "Dark Souls",
+"Dark Souls Ii",
+"Dbz Budokai Hd",
+"Dead Island",
+"Dead Or Alive 5 Ultimate",
+"Dead Space Pt-Br",
+"Destiny The Taken King Legendary Edition",
+"Diablo Iii Reaper Of Souls",
+"Dirt 3",
+"Dmc Devil May Cry",
+"Dragon Ball Z Battle Of Z",
+"Dragon Ball Z Ultimate Tenkaichi",
+"Duke Nukem Forever",
+"Ducktales Remastered",
+"Earth Defense Force Insect Armageddon",
+"Epic Mickey 2 The Power Of Two",
+"F1 2013",
+"Fallout 3 Ptbr",
+"Family Guy Back To The Multiverse",
+"Far Cry 2",
+"Far Cry 3",
+"Farming Simulator 15",
+"Fifa 19",
+"Fifa Street",
+"Fifa Street 3",
+"Formula 1 2014 Pt-Br",
+"Forza Horizon",
+"Forza Horizon 2",
+"Forza Motorsport 3",
+"Forza Motorsport 4 Racing",
+"Fuse",
+"Gears Of War 2",
 "Gears Of War 3",
+"Gh 3",
 "Grand Theft Auto Iv",
+"Gta Iv",
+"Half-Life 2",
+"Halo Wars",
+"Hitman Hd Trilogy",
+"Hot Wheels Beat That",
+"Hot Wheels World's Best Driver Pt-Br",
+"Injustice Gods Among Us Ultimate Edition",
+"Jogos Infantil",
+"Joy Ride Turbo",
+"Kinect",
+"L.a. Noire Complete Edition",
+"Left 4 Dead",
 "Left 4 Dead 2",
+"Lego Batman",
+"Lego Batman 2 Dc Super Heroes",
+"Lego Batman 3 Beyond Gotham",
+"Lego Indiana Jones",
+"Lego Marvel Avengers",
+"Lego Marvel Super Heroes",
+"Lego Star Wars Ii - The Original Trilogy",
+"Lego Star Wars Tcs",
+"Lost Planet 3",
+"Marvel Vs Capcom 3",
+"Max Payne 3",
+"Medal Of Honor",
+"Metro Last",
+"Michael Phelps Ptl",
+"Midnight Club Los Angeles",
 "Minecraft",
+"Minecraft Story Mode - Season 2 Complete",
+"Monopoly Plus",
 "Mortal Kombat Komplete Edition",
+"Mortal Kombat Vs Dc Universe",
+"Motogp.14",
+"Mx Vs Atv Supercross",
+"Mx Vs Atv Untamed",
+"Nascar 15",
 "Naruto Storm R",
+"Naruto Ultimate Storm",
 "Nba 2k18",
+"Need For Speed The Run",
+"Nfs - Most Wanted",
+"Nfs Hot Pursuit",
+"Novo Brazukas 2024",
+"Overlord 1",
+"Pac Man And The Ghostly Adventures 2",
+"Payday 2",
+"Pes 2014 Pt-Br",
+"Pes 2018",
+"Pes16",
+"Persona 4 Arena Ultimax",
+"Pro Evolution Soccer 2006",
+"Pro Evolution Soccer 2012",
+"Pro Evolution Soccer 2013",
+"Prototype",
+"Rayman Origins",
+"Rayman® Legends",
+"Red Dead Redemption Pt-Br Disc1",
+"Red Dead Redemption Pt-Br Disc2",
+"Resident Evil 4 Hd",
+"Resident Evil 5 Pt-Br",
 "Resident Evil 6",
-"Skate 3",
+"Resident Evil Remake Hd",
+"Resident Evil Revelations 2",
+"Rock Band (Usa)",
+"Rock Band 2 (Usa)",
+"Rock Band 3 (Usa Europe)",
+"Rock Band The Beatles",
+"Shadows Of The Damned",
+"Skate 3 (Usa Europe) (Enfrde&ItNl)",
+"Sniper Elite Iii",
+"Sonic All Stars Racing Transformed",
+"Sonic Free Riders",
+"Sonic Generations",
+"Sonic Unleashed",
+"Soul Calibur V",
+"Spider Man Web Of Shadows",
+"Spider-Man Dimensions",
+"Spider-Man Eot",
+"Street Fighter Iv",
+"Street Fighter X Vs Tekken",
+"The Amazing Spider-Man 2",
+"The Elder Scrolls V Skyrim",
+"The Legend Of Spyro Dawn Of The Dragon",
+"The Lord Of The Rings War Of The North",
+"The Sims 3",
+"The Walking Dead Pt-Br",
+"The Witcher 2",
+"Thief",
 "Titanfall",
 "Tomb Raider",
-"Watch Dogs (Gorazinobr)"
+"Ufcu3-Xex",
+"Ultimate Marvel Vs. Capcom 3",
+"Unreal Tournament 3",
+"Watch Dogs (Gorazinobr)",
+"Wwe All Star",
+"X-Men Origins Wolverine",
+"Yaiba Ninja Gaiden Z"
 ];
 
 jogos.sort();
