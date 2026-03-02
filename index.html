@@ -1,16 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Jogos Xbox 360</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    color: white;
+    text-align: center;
+}
+
+/* INTRO */
+#intro {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#intro video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#conteudo {
+    display: none;
+}
+
+h1 {
+    background: radial-gradient(circle at right, #107c10 0%, #0f2027 80%);
+    padding: 20px 15px;
+    margin: 0;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container {
+    padding: 15px;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 5px;
+    border: none;
+}
+
+#contador {
+    margin: 10px;
+    font-weight: bold;
+    color: #00ff88;
+}
+
+.categoria {
+    margin-top: 30px;
+}
+
+.categoria h2 {
+    text-align: left;
+    padding-left: 15px;
+    color: #00ff88;
+}
+
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game {
+    background-color: #1e1e1e;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 8px;
+    width: 45%;
+    max-width: 250px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.game:hover {
+    border: 2px solid #00ff88;
+}
+
+.game.selected {
+    background-color: #107c10;
+    border: 2px solid #00ff88;
+}
+
+button {
+    background-color: transparent;
+    color: #00ff88;
+    padding: 12px 25px;
+    border: 2px solid #00ff88;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: rgba(0,255,136,0.1);
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+    <video id="videoIntro" autoplay muted playsinline>
+        <source src="https://leo2049.github.io/Lista-de-Jogos-Xbox-360/startup.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="conteudo">
+
+<h1>🎮 Lista de Jogos Xbox 360</h1>
+
+<div class="container">
+
+<input type="text" id="cliente" placeholder="Nome do Cliente">
+<input type="text" id="whatsapp" placeholder="WhatsApp">
+
+<div id="contador">Jogos selecionados: 0</div>
+
+<div id="games"></div>
+
+<br>
+<button onclick="copiarTexto()">📋 Copie e Cole no WhatsApp</button>
+
+</div>
+</div>
+
+<script>
+
+const video = document.getElementById("videoIntro");
+video.onended = function() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("conteudo").style.display = "block";
+};
+
+const categorias = {
+
+"Ação / Aventura": [
+"Assassin's Creed","Assassin's Creed Ii","Assassin's Creed 4 Black Flag",
+"Assassin's Creed Rogue","Batman Arkcity Goty","Far Cry 2","Far Cry 3",
+"Grand Theft Auto Iv","Max Payne 3","Red Dead Redemption Disc1",
+"Red Dead Redemption Disc2","Tomb Raider","Watch Dogs (Gorazinobr)"
+],
+
+"Tiro / FPS": [
+"Battlefield 4","Call Of Duty Black Ops 2",
+"Call Of Duty Modern Warfare 3","Left 4 Dead 2","Titanfall"
+],
+
+"Corrida": [
+"Forza Horizon","Forza Horizon 2","Forza Motorsport 4 Racing",
+"Need For Speed The Run","Nfs - Most Wanted"
+],
+
+"Esportes": [
+"Fifa 19","Pes 2018","Nba 2k18","Skate 3"
+],
+
+"Luta": [
+"Mortal Kombat Komplete Edition","Street Fighter Iv",
+"Naruto Ultimate Storm","Dragon Ball Z Ultimate Tenkaichi"
+],
+
+"Infantil / Família": [
+"Minecraft","Lego Batman","Lego Marvel Super Heroes",
+"Rayman Origins","Sonic Generations"
+]
+
+};
+
 const container = document.getElementById("games");
 
 for (let categoria in categorias) {
 
+    const bloco = document.createElement("div");
+    bloco.className = "categoria";
+
     const titulo = document.createElement("h2");
     titulo.innerText = categoria;
-    titulo.style.marginTop = "30px";
-    titulo.style.color = "#00ff88";
-    container.appendChild(titulo);
+    bloco.appendChild(titulo);
 
     const linha = document.createElement("div");
     linha.className = "games";
-    container.appendChild(linha);
 
     categorias[categoria].sort().forEach(jogo => {
 
@@ -25,4 +216,35 @@ for (let categoria in categorias) {
 
         linha.appendChild(div);
     });
+
+    bloco.appendChild(linha);
+    container.appendChild(bloco);
 }
+
+function atualizarContador() {
+    const selecionados = document.querySelectorAll(".selected").length;
+    document.getElementById("contador").innerText =
+        "Jogos selecionados: " + selecionados;
+}
+
+function copiarTexto() {
+    const cliente = document.getElementById("cliente").value || "(não preenchido)";
+    const whatsapp = document.getElementById("whatsapp").value || "(não preenchido)";
+    const selecionados = document.querySelectorAll(".selected");
+
+    let texto = "Cliente: " + cliente + "\n";
+    texto += "WhatsApp: " + whatsapp + "\n\n";
+    texto += "Jogos:\n";
+
+    selecionados.forEach(jogo => {
+        texto += "- " + jogo.innerText + "\n";
+    });
+
+    navigator.clipboard.writeText(texto);
+    alert("Copiado!");
+}
+
+</script>
+
+</body>
+</html>
