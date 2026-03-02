@@ -14,7 +14,7 @@ body {
     text-align: center;
 }
 
-    /* CONTADOR FLUTUANTE */
+/* CONTADOR FLUTUANTE */
 #contadorFlutuante {
     position: fixed;
     bottom: 12px;
@@ -26,11 +26,6 @@ body {
     font-size: 14px;
     font-weight: bold;
     z-index: 9999;
-}
-
-#contadorFlutuante.limite {
-    border: 2px solid red;
-    background: #300;
 }
 
 /* INTRO */
@@ -50,7 +45,7 @@ body {
     object-fit: cover;
 }
 
-/* TÍTULO PRINCIPAL */
+/* TÍTULO */
 h1 {
     background: radial-gradient(circle at right, #107c10 0%, #0f2027 80%);
     padding: 20px;
@@ -58,7 +53,7 @@ h1 {
     font-size: 1.8rem;
 }
 
-/* FAIXA DAS CATEGORIAS */
+/* CATEGORIAS */
 .categoria h2 {
     background: radial-gradient(circle at right, #107c10 0%, #0f2027 80%);
     padding: 12px;
@@ -81,14 +76,13 @@ input {
     font-size: 1rem;
 }
 
-#contador {
+#contadorTexto {
     margin: 15px;
     font-weight: bold;
     color: #00ff88;
-    font-size: 1rem;
 }
 
-/* LISTA DE JOGOS */
+/* LISTA */
 .games {
     display: flex;
     flex-wrap: wrap;
@@ -113,7 +107,7 @@ input {
     border: 2px solid #00ff88;
 }
 
-/* SELECIONADO - VERMELHO ELEGANTE */
+/* SELECIONADO */
 .game.selected {
     background: linear-gradient(135deg, #7a0000, #b30000);
     border: 2px solid #ff4d4d;
@@ -133,10 +127,13 @@ button {
 }
 </style>
 </head>
+
+<body>
+
+<!-- CONTADOR FLUTUANTE -->
 <div id="contadorFlutuante">
     <span id="contadorNumero">0</span>
 </div>
-<body>
 
 <!-- INTRO -->
 <div id="intro">
@@ -155,7 +152,7 @@ button {
 <input type="text" id="cliente" placeholder="Nome do Cliente">
 <input type="text" id="whatsapp" placeholder="WhatsApp">
 
-<div id="contador">Jogos selecionados: 0</div>
+<div id="contadorTexto">Jogos selecionados: <span id="contadorInterno">0</span></div>
 
 <div id="games"></div>
 
@@ -166,16 +163,14 @@ button {
 
 <script>
 
-/* INTRO FUNCIONANDO */
+/* INTRO */
 const video = document.getElementById("videoIntro");
-
 video.onended = function() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("conteudo").style.display = "block";
 };
 
 /* CATEGORIAS */
-
 const categorias = {
 
 "Ação / Aventura": [
@@ -299,6 +294,8 @@ const categorias = {
 ]
 };
 
+
+
 const container = document.getElementById("games");
 
 for (let categoria in categorias) {
@@ -331,28 +328,14 @@ for (let categoria in categorias) {
     container.appendChild(bloco);
 }
 
-const jogos = document.querySelectorAll(".jogo");
-const contadorNumero = document.getElementById("contadorNumero");
-
-let totalSelecionados = 0;
-
-jogos.forEach(jogo => {
-    jogo.addEventListener("click", function () {
-
-        if (!jogo.classList.contains("selecionado")) {
-            jogo.classList.add("selecionado");
-            totalSelecionados++;
-        } else {
-            jogo.classList.remove("selecionado");
-            totalSelecionados--;
-        }
-
-        contadorNumero.textContent = totalSelecionados;
-
-    });
-});
+/* CONTADOR */
+function atualizarContador() {
+    const selecionados = document.querySelectorAll(".selected");
+    document.getElementById("contadorNumero").textContent = selecionados.length;
+    document.getElementById("contadorInterno").textContent = selecionados.length;
 }
 
+/* COPIAR */
 function copiarTexto() {
     const cliente = document.getElementById("cliente").value || "(não preenchido)";
     const whatsapp = document.getElementById("whatsapp").value || "(não preenchido)";
@@ -374,6 +357,8 @@ function copiarTexto() {
 
 </body>
 </html>
+
+
 
 
 
