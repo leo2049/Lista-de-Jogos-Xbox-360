@@ -15,20 +15,17 @@ body {
 }
 
     /* CONTADOR FLUTUANTE */
-
 #contadorFlutuante {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
-    background: #111;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-size: 16px;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #00ff00;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 14px;
     font-weight: bold;
-    box-shadow: 0 0 15px rgba(0,0,0,0.6);
     z-index: 9999;
-    border: 2px solid #00ff00;
 }
 
 #contadorFlutuante.limite {
@@ -137,7 +134,7 @@ button {
 </style>
 </head>
 <div id="contadorFlutuante">
-    🎮 Selecionados: <span id="contadorNumero">0</span>/30
+    <span id="contadorNumero">0</span>
 </div>
 <body>
 
@@ -334,10 +331,26 @@ for (let categoria in categorias) {
     container.appendChild(bloco);
 }
 
-function atualizarContador() {
-    const selecionados = document.querySelectorAll(".selected").length;
-    document.getElementById("contador").innerText =
-        "Jogos selecionados: " + selecionados;
+const jogos = document.querySelectorAll(".jogo");
+const contadorNumero = document.getElementById("contadorNumero");
+
+let totalSelecionados = 0;
+
+jogos.forEach(jogo => {
+    jogo.addEventListener("click", function () {
+
+        if (!jogo.classList.contains("selecionado")) {
+            jogo.classList.add("selecionado");
+            totalSelecionados++;
+        } else {
+            jogo.classList.remove("selecionado");
+            totalSelecionados--;
+        }
+
+        contadorNumero.textContent = totalSelecionados;
+
+    });
+});
 }
 
 function copiarTexto() {
@@ -361,6 +374,7 @@ function copiarTexto() {
 
 </body>
 </html>
+
 
 
 
