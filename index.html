@@ -14,6 +14,28 @@ body {
     text-align: center;
 }
 
+    /* CONTADOR FLUTUANTE */
+
+#contadorFlutuante {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    background: #111;
+    color: white;
+    padding: 12px 18px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    z-index: 9999;
+    border: 2px solid #00ff00;
+}
+
+#contadorFlutuante.limite {
+    border: 2px solid red;
+    background: #300;
+}
+
 /* INTRO */
 #intro {
     position: fixed;
@@ -114,7 +136,9 @@ button {
 }
 </style>
 </head>
-
+<div id="contadorFlutuante">
+    🎮 Selecionados: <span id="contadorNumero">0</span>/30
+</div>
 <body>
 
 <!-- INTRO -->
@@ -337,6 +361,7 @@ function copiarTexto() {
 
 </body>
 </html>
+
 
 
 
