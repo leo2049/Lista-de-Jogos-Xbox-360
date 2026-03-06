@@ -481,25 +481,42 @@ function atualizarContador() {
 
 /* COPIAR */
 function copiarTexto() {
+
     const cliente = document.getElementById("cliente").value || "(não preenchido)";
+    const whatsapp = document.getElementById("whatsapp").value || "";
     const selecionados = document.querySelectorAll(".selected");
+
+    if(selecionados.length === 0){
+        alert("Selecione pelo menos um jogo.");
+        return;
+    }
 
     let texto = "Cliente: " + cliente + "\n";
     texto += "WhatsApp: " + whatsapp + "\n\n";
-    texto += "Jogos:\n";
+    texto += "Jogos escolhidos:\n";
 
     selecionados.forEach(jogo => {
         texto += "- " + jogo.innerText + "\n";
     });
 
-    navigator.clipboard.writeText(texto);
-    alert("Copiado!");
+    const mensagem = encodeURIComponent(texto);
+
+    let link;
+
+    if(whatsapp !== ""){
+        link = "https://wa.me/55" + whatsapp.replace(/\D/g,'') + "?text=" + mensagem;
+    }else{
+        link = "https://wa.me/?text=" + mensagem;
+    }
+
+    window.open(link, "_blank");
 }
 
 </script>
 
 </body>
 </html>
+
 
 
 
