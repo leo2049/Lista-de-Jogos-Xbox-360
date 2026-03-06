@@ -510,21 +510,16 @@ function copiarTexto() {
 
     const mensagem = encodeURIComponent(texto);
 
-    let link;
+   let link = "https://wa.me/?text=" + mensagem;
 
-    if(whatsapp !== ""){
-        link = "https://wa.me/55" + whatsapp.replace(/\D/g,'') + "?text=" + mensagem;
-    }else{
-        link = "https://wa.me/?text=" + mensagem;
-    }
-
-    window.open(link, "_blank");
+   window.open(link, "_blank");
 }
 
 </script>
 
 </body>
 </html>
+
 
 
 
