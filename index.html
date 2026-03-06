@@ -491,12 +491,21 @@ function copiarTexto() {
         return;
     }
 
+    let jogos = [];
+
+    selecionados.forEach(jogo => {
+        jogos.push(jogo.innerText);
+    });
+
+    // ORDENA ALFABETICAMENTE
+    jogos.sort((a, b) => a.localeCompare(b));
+
     let texto = "Cliente: " + cliente + "\n";
     texto += "WhatsApp: " + whatsapp + "\n\n";
     texto += "Jogos escolhidos:\n";
 
-    selecionados.forEach(jogo => {
-        texto += "- " + jogo.innerText + "\n";
+    jogos.forEach(jogo => {
+        texto += "- " + jogo + "\n";
     });
 
     const mensagem = encodeURIComponent(texto);
@@ -516,6 +525,7 @@ function copiarTexto() {
 
 </body>
 </html>
+
 
 
 
