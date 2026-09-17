@@ -675,49 +675,39 @@ function procurarNoBanco(jogo) {
 }
 
 function carregarCapa(jogo, img) {
-    const manual = capasLocais[jogo];
+    // PRIORIDADE:
+    // 1) Capa colocada manualmente na pasta /capas
+    // 2) Capa automática da x360db
+    // 3) SEM CAPA
 
-    // Manual tem prioridade.
-    if (manual) {
-        img.onerror = () => {
-            img.onerror = null;
-            img.src = nomeArquivoManual(jogo);
-        };
-        img.src = manual;
-        return;
-    }
-
+    const manual = capasLocais[jogo] || nomeArquivoManual(jogo);
     const game = procurarNoBanco(jogo);
 
-    if (game && game.id) {
-        // Não usa a URL boxart do JSON, pois alguns registros antigos
-        // podem apontar para URLs que não carregam corretamente no GitHub Pages.
-        const urls = [
-            `https://xenia-manager.github.io/x360db/titles/${game.id}/artwork/boxart.jpg`,
-            `https://raw.githubusercontent.com/xenia-manager/x360db/main/titles/${game.id}/artwork/boxart.jpg`,
-            nomeArquivoManual(jogo)
-        ];
+    let urls = [manual];
 
-        let tentativa = 0;
-        img.onerror = function() {
-            tentativa++;
-            if (tentativa < urls.length) {
-                img.src = urls[tentativa];
-            } else {
-                img.onerror = null;
-                img.src = criarCapaFallback(jogo);
-            }
-        };
-        img.src = urls[0];
-    } else {
-        img.onerror = function() {
+    if (game && game.id) {
+        urls.push(
+            `https://xenia-manager.github.io/x360db/titles/${game.id}/artwork/boxart.jpg`,
+            `https://raw.githubusercontent.com/xenia-manager/x360db/main/titles/${game.id}/artwork/boxart.jpg`
+        );
+    }
+
+    let tentativa = 0;
+
+    img.onerror = function() {
+        tentativa++;
+
+        if (tentativa < urls.length) {
+            img.src = urls[tentativa];
+        } else {
             img.onerror = null;
             img.src = criarCapaFallback(jogo);
-        };
-        img.src = nomeArquivoManual(jogo);
-    }
-}
+        }
+    };
 
+    // Primeiro SEMPRE tenta a imagem que você colocou em /capas.
+    img.src = urls[0];
+}
 async function carregarBancoDeCapas() {
     try {
         // URL oficial documentada pela própria x360db.
