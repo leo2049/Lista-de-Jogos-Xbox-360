@@ -603,16 +603,13 @@ const capasManuais = {
 
 // Cache das capas encontradas automaticamente.
 /* CAPAS DOS JOGOS
-   1) Primeiro tenta encontrar a capa automaticamente na x360db.
-   2) Se não encontrar, tenta a capa manual em /capas/<nome-do-jogo>.jpg
-   3) Se ainda não existir, mostra SEM CAPA.
-
-   A x360db disponibiliza games.json com título + URL de boxart.
-   Fonte: https://github.com/xenia-manager/x360db
+   Busca a capa correta na base x360db.
+   A base informa que cada jogo possui um Title ID e que o boxart pode
+   ser carregado em /titles/{TitleID}/artwork/boxart.jpg.
 */
 const capasLocais = {
-    // Você pode colocar exceções aqui se quiser:
-    // "Nome do Jogo": "capas/minha-capa.jpg"
+    // Se algum jogo não for encontrado automaticamente, você pode colocar aqui:
+    // "Nome do Jogo": "capas/nome-da-capa.jpg"
 };
 
 let bancoCapasXbox360 = [];
@@ -651,87 +648,102 @@ function nomeArquivoManual(jogo) {
 function procurarNoBanco(jogo) {
     const alvo = normalizarNome(jogo);
 
-    // 1. Correspondência exata
     let encontrado = bancoCapasXbox360.find(g =>
-        normalizarNome(g.title || "") === alvo && g.boxart
+        g && g.title && normalizarNome(g.title) === alvo
     );
-    if (encontrado) return encontrado.boxart;
 
-    // 2. Alguns nomes da lista possuem edição/disco que não aparece na base.
-    const simplificado = alvo
-        .replace(/\bgoty\b/g, "")
-        .replace(/\bgame of the year edition\b/g, "")
-        .replace(/\bcomplete edition\b/g, "")
-        .replace(/\butimate edition\b/g, "")
-        .replace(/\bultimate\b/g, "")
-        .replace(/\bdisc [12]\b/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+    if (!encontrado) {
+        const simplificado = alvo
+            .replace(/\bgoty\b/g, "")
+            .replace(/\bgame of the year edition\b/g, "")
+            .replace(/\bcomplete edition\b/g, "")
+            .replace(/\bultimate edition\b/g, "")
+            .replace(/\bdisc [12]\b/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
 
-    encontrado = bancoCapasXbox360.find(g => {
-        const t = normalizarNome(g.title || "");
-        return g.boxart && (t === simplificado || t.startsWith(simplificado) || simplificado.startsWith(t));
-    });
+        encontrado = bancoCapasXbox360.find(g => {
+            if (!g || !g.title) return false;
+            const t = normalizarNome(g.title);
+            return t === simplificado ||
+                   t.startsWith(simplificado) ||
+                   simplificado.startsWith(t);
+        });
+    }
 
-    return encontrado ? encontrado.boxart : null;
+    return encontrado || null;
 }
 
 function carregarCapa(jogo, img) {
-    // Exceção manual tem prioridade.
     const manual = capasLocais[jogo];
-    const automatica = procurarNoBanco(jogo);
 
-    img.onerror = function() {
-        img.onerror = null;
-
-        // Se a capa automática falhar, tenta a manual pelo nome.
-        if (img.src !== manual && manual) {
-            img.src = manual;
-            return;
-        }
-
-        // Por último tenta /capas/nome-do-jogo.jpg
-        const arquivo = nomeArquivoManual(jogo);
-        if (!img.dataset.tentouManual) {
-            img.dataset.tentouManual = "1";
-            img.src = arquivo;
-            return;
-        }
-
-        img.src = criarCapaFallback(jogo);
-    };
-
+    // Manual tem prioridade.
     if (manual) {
+        img.onerror = () => {
+            img.onerror = null;
+            img.src = nomeArquivoManual(jogo);
+        };
         img.src = manual;
-    } else if (automatica) {
-        img.src = automatica;
+        return;
+    }
+
+    const game = procurarNoBanco(jogo);
+
+    if (game && game.id) {
+        // Não usa a URL boxart do JSON, pois alguns registros antigos
+        // podem apontar para URLs que não carregam corretamente no GitHub Pages.
+        const urls = [
+            `https://xenia-manager.github.io/x360db/titles/${game.id}/artwork/boxart.jpg`,
+            `https://raw.githubusercontent.com/xenia-manager/x360db/main/titles/${game.id}/artwork/boxart.jpg`,
+            nomeArquivoManual(jogo)
+        ];
+
+        let tentativa = 0;
+        img.onerror = function() {
+            tentativa++;
+            if (tentativa < urls.length) {
+                img.src = urls[tentativa];
+            } else {
+                img.onerror = null;
+                img.src = criarCapaFallback(jogo);
+            }
+        };
+        img.src = urls[0];
     } else {
+        img.onerror = function() {
+            img.onerror = null;
+            img.src = criarCapaFallback(jogo);
+        };
         img.src = nomeArquivoManual(jogo);
     }
 }
 
 async function carregarBancoDeCapas() {
     try {
+        // URL oficial documentada pela própria x360db.
         const resposta = await fetch(
-            "https://raw.githubusercontent.com/xenia-manager/x360db/main/games.json"
+            "https://xenia-manager.github.io/x360db/games.json",
+            { cache: "no-store" }
         );
 
-        if (!resposta.ok) throw new Error("Não foi possível acessar a base de capas.");
+        if (!resposta.ok) throw new Error("games.json retornou " + resposta.status);
 
         bancoCapasXbox360 = await resposta.json();
 
-        // Depois que a base chega, atualiza as capas que ainda estavam sem imagem.
         document.querySelectorAll(".game").forEach(div => {
             const jogo = div.dataset.jogo;
             const img = div.querySelector("img");
-
-            if (jogo && img) {
-                img.dataset.tentouManual = "";
-                carregarCapa(jogo, img);
-            }
+            if (jogo && img) carregarCapa(jogo, img);
         });
     } catch (erro) {
-        console.warn("Base x360db indisponível. Usando capas locais.", erro);
+        console.warn("Não foi possível carregar a base x360db:", erro);
+
+        // Mesmo sem a base, tenta as capas manuais.
+        document.querySelectorAll(".game").forEach(div => {
+            const jogo = div.dataset.jogo;
+            const img = div.querySelector("img");
+            if (jogo && img) carregarCapa(jogo, img);
+        });
     }
 }
 
