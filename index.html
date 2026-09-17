@@ -602,292 +602,32 @@ const capasManuais = {
 };
 
 // Cache das capas encontradas automaticamente.
-/* CAPAS LOCAIS
-   Coloque as imagens na pasta "capas", no mesmo repositório do index.html.
-   Use exatamente os nomes de arquivo abaixo. Você pode trocar qualquer caminho
-   manualmente se quiser usar outro nome de arquivo.
+/* CAPAS DOS JOGOS
+   1) Primeiro tenta encontrar a capa automaticamente na x360db.
+   2) Se não encontrar, tenta a capa manual em /capas/<nome-do-jogo>.jpg
+   3) Se ainda não existir, mostra SEM CAPA.
+
+   A x360db disponibiliza games.json com título + URL de boxart.
+   Fonte: https://github.com/xenia-manager/x360db
 */
 const capasLocais = {
-    "007 Quantum of Solace": "capas/007-quantum-of-solace.jpg",
-    "Alan Wake": "capas/alan-wake.jpg",
-    "Army of Two - The Devil's Cartel": "capas/army-of-two-the-devil-s-cartel.jpg",
-    "Assassin's Creed": "capas/assassin-s-creed.jpg",
-    "Assassin's Creed II": "capas/assassin-s-creed-ii.jpg",
-    "Assassin's Creed: Brotherhood": "capas/assassin-s-creed-brotherhood.jpg",
-    "Assassin's Creed: Revelations": "capas/assassin-s-creed-revelations.jpg",
-    "Assassin's Creed IV: Black Flag": "capas/assassin-s-creed-iv-black-flag.jpg",
-    "Assassin's Creed Rogue": "capas/assassin-s-creed-rogue.jpg",
-    "Alice: Madness Returns": "capas/alice-madness-returns.jpg",
-    "Batman: Arkham City – Game of the Year Edition": "capas/batman-arkham-city-game-of-the-year-edition.jpg",
-    "Batman: Arkham Origins": "capas/batman-arkham-origins.jpg",
-    "Bully: Scholarship Edition": "capas/bully-scholarship-edition.jpg",
-    "Captain America: Super Soldier": "capas/captain-america-super-soldier.jpg",
-    "Castlevania: Lords of Shadow 2": "capas/castlevania-lords-of-shadow-2.jpg",
-    "Dante's Inferno": "capas/dante-s-inferno.jpg",
-    "Darksiders II": "capas/darksiders-ii.jpg",
-    "Dead to Rights: Retribution": "capas/dead-to-rights-retribution.jpg",
-    "Devil May Cry 4": "capas/devil-may-cry-4.jpg",
-    "DmC: Devil May Cry": "capas/dmc-devil-may-cry.jpg",
-    "Enslaved: Odyssey to the West": "capas/enslaved-odyssey-to-the-west.jpg",
-    "Far Cry 2": "capas/far-cry-2.jpg",
-    "Far Cry 3": "capas/far-cry-3.jpg",
-    "Far Cry 4": "capas/far-cry-4.jpg",
-    "Fable II GOTY": "capas/fable-ii-goty.jpg",
-    "Fuse": "capas/fuse.jpg",
-    "Grand Theft Auto IV": "capas/grand-theft-auto-iv.jpg",
-    "Grand Theft Auto V": "capas/grand-theft-auto-v.jpg",
-    "Hitman HD Trilogy": "capas/hitman-hd-trilogy.jpg",
-    "L.A. Noire – Complete Edition": "capas/l-a-noire-complete-edition.jpg",
-    "Mafia II": "capas/mafia-ii.jpg",
-    "Max Payne 3": "capas/max-payne-3.jpg",
-    "Metal Gear Rising: Revengeance": "capas/metal-gear-rising-revengeance.jpg",
-    "Portal 2": "capas/portal-2.jpg",
-    "Prince of Persia: The Forgotten Sands": "capas/prince-of-persia-the-forgotten-sands.jpg",
-    "Prototype": "capas/prototype.jpg",
-    "Red Dead Redemption (Disc 1)": "capas/red-dead-redemption-disc-1.jpg",
-    "Red Dead Redemption (Disc 2)": "capas/red-dead-redemption-disc-2.jpg",
-    "Rocket Knight": "capas/rocket-knight.jpg",
-    "Spider-Man: Edge of Time": "capas/spider-man-edge-of-time.jpg",
-    "Spider-Man: Shattered Dimensions": "capas/spider-man-shattered-dimensions.jpg",
-    "Spider-Man: Web of Shadows": "capas/spider-man-web-of-shadows.jpg",
-    "The Amazing Spider-Man 2": "capas/the-amazing-spider-man-2.jpg",
-    "The Godfather II": "capas/the-godfather-ii.jpg",
-    "The Incredible Hulk": "capas/the-incredible-hulk.jpg",
-    "The Legend of Korra": "capas/the-legend-of-korra.jpg",
-    "The Lord of the Rings: Conquest": "capas/the-lord-of-the-rings-conquest.jpg",
-    "The Lord of the Rings: War of the North": "capas/the-lord-of-the-rings-war-of-the-north.jpg",
-    "The Witcher 2: Assassins of Kings": "capas/the-witcher-2-assassins-of-kings.jpg",
-    "Thief": "capas/thief.jpg",
-    "Thor: God of Thunder": "capas/thor-god-of-thunder.jpg",
-    "Tomb Raider": "capas/tomb-raider.jpg",
-    "Transformers: Fall of Cybertron": "capas/transformers-fall-of-cybertron.jpg",
-    "Watch Dogs": "capas/watch-dogs.jpg",
-    "X-Men Destiny": "capas/x-men-destiny.jpg",
-    "X-Men Origins: Wolverine": "capas/x-men-origins-wolverine.jpg",
-    "Yaiba: Ninja Gaiden Z": "capas/yaiba-ninja-gaiden-z.jpg",
-    "Battlefield 3": "capas/battlefield-3.jpg",
-    "Battlefield 4": "capas/battlefield-4.jpg",
-    "Battlefield: Bad Company": "capas/battlefield-bad-company.jpg",
-    "Battlefield: Bad Company 2": "capas/battlefield-bad-company-2.jpg",
-    "BioShock 2": "capas/bioshock-2.jpg",
-    "Call of Duty: Advanced Warfare": "capas/call-of-duty-advanced-warfare.jpg",
-    "Call of Duty: Black Ops": "capas/call-of-duty-black-ops.jpg",
-    "Call of Duty: Black Ops II": "capas/call-of-duty-black-ops-ii.jpg",
-    "Call of Duty: Ghosts": "capas/call-of-duty-ghosts.jpg",
-    "Call of Duty: Modern Warfare": "capas/call-of-duty-modern-warfare.jpg",
-    "Call of Duty 2": "capas/call-of-duty-2.jpg",
-    "Call of Duty 3": "capas/call-of-duty-3.jpg",
-    "Call of Duty 4: Modern Warfare": "capas/call-of-duty-4-modern-warfare.jpg",
-    "Call of Duty: Modern Warfare 3": "capas/call-of-duty-modern-warfare-3.jpg",
-    "Call of Duty: World at War": "capas/call-of-duty-world-at-war.jpg",
-    "Call of Juarez: Bound in Blood": "capas/call-of-juarez-bound-in-blood.jpg",
-    "Crysis 3": "capas/crysis-3.jpg",
-    "Dead Space": "capas/dead-space.jpg",
-    "Dead Space 2": "capas/dead-space-2.jpg",
-    "Dead Space 3": "capas/dead-space-3.jpg",
-    "Destiny: The Taken King – Legendary Edition": "capas/destiny-the-taken-king-legendary-edition.jpg",
-    "Doom 3: BFG Edition": "capas/doom-3-bfg-edition.jpg",
-    "Duke Nukem Forever": "capas/duke-nukem-forever.jpg",
-    "Earth Defense Force: Insect Armageddon": "capas/earth-defense-force-insect-armageddon.jpg",
-    "Gears of War": "capas/gears-of-war.jpg",
-    "Gears of War 2": "capas/gears-of-war-2.jpg",
-    "Gears of War 3": "capas/gears-of-war-3.jpg",
-    "Halo 4": "capas/halo-4.jpg",
-    "Halo Wars": "capas/halo-wars.jpg",
-    "Left 4 Dead": "capas/left-4-dead.jpg",
-    "Left 4 Dead 2": "capas/left-4-dead-2.jpg",
-    "Lost Planet 3": "capas/lost-planet-3.jpg",
-    "Medal of Honor": "capas/medal-of-honor.jpg",
-    "Medal of Honor: Airborne": "capas/medal-of-honor-airborne.jpg",
-    "Metro: Last Light": "capas/metro-last-light.jpg",
-    "Operation Flashpoint: Dragon Rising": "capas/operation-flashpoint-dragon-rising.jpg",
-    "Payday 2": "capas/payday-2.jpg",
-    "Perfect Dark Zero": "capas/perfect-dark-zero.jpg",
-    "Plants vs. Zombies: Garden Warfare": "capas/plants-vs-zombies-garden-warfare.jpg",
-    "Prey": "capas/prey.jpg",
-    "Quantum Theory": "capas/quantum-theory.jpg",
-    "Rainbow Six: Vegas 2": "capas/rainbow-six-vegas-2.jpg",
-    "Singularity": "capas/singularity.jpg",
-    "Sniper Elite III": "capas/sniper-elite-iii.jpg",
-    "Titanfall": "capas/titanfall.jpg",
-    "Turok": "capas/turok.jpg",
-    "Unreal Tournament 3": "capas/unreal-tournament-3.jpg",
-    "Ace Combat 6: Fires of Liberation": "capas/ace-combat-6-fires-of-liberation.jpg",
-    "After Burner Climax": "capas/after-burner-climax.jpg",
-    "Air Conflicts: Vietnam": "capas/air-conflicts-vietnam.jpg",
-    "Blur": "capas/blur.jpg",
-    "Burnout 3: Takedown": "capas/burnout-3-takedown.jpg",
-    "Burnout Paradise": "capas/burnout-paradise.jpg",
-    "Dirt 2": "capas/dirt-2.jpg",
-    "Dirt 3": "capas/dirt-3.jpg",
-    "F1 2013": "capas/f1-2013.jpg",
-    "F1 2014": "capas/f1-2014.jpg",
-    "F1 Race Stars": "capas/f1-race-stars.jpg",
-    "FlatOut: Ultimate Carnage": "capas/flatout-ultimate-carnage.jpg",
-    "Forza Horizon": "capas/forza-horizon.jpg",
-    "Forza Horizon 2": "capas/forza-horizon-2.jpg",
-    "Forza Horizon 2 Presents Fast & Furious": "capas/forza-horizon-2-presents-fast-furious.jpg",
-    "Forza Motorsport 3": "capas/forza-motorsport-3.jpg",
-    "Forza Motorsport 4": "capas/forza-motorsport-4.jpg",
-    "GRID 2": "capas/grid-2.jpg",
-    "GRID Autosport": "capas/grid-autosport.jpg",
-    "Hot Wheels: Beat That!": "capas/hot-wheels-beat-that.jpg",
-    "Hot Wheels: World's Best Driver": "capas/hot-wheels-world-s-best-driver.jpg",
-    "Midnight Club: Los Angeles": "capas/midnight-club-los-angeles.jpg",
-    "MotoGP 14": "capas/motogp-14.jpg",
-    "MX vs. ATV Supercross": "capas/mx-vs-atv-supercross.jpg",
-    "MX vs. ATV Untamed": "capas/mx-vs-atv-untamed.jpg",
-    "MXGP: The Official Motocross Videogame": "capas/mxgp-the-official-motocross-videogame.jpg",
-    "NASCAR 15": "capas/nascar-15.jpg",
-    "Need for Speed: Hot Pursuit": "capas/need-for-speed-hot-pursuit.jpg",
-    "Need for Speed: Most Wanted": "capas/need-for-speed-most-wanted.jpg",
-    "Need for Speed: Rivals": "capas/need-for-speed-rivals.jpg",
-    "Need for Speed: The Run": "capas/need-for-speed-the-run.jpg",
-    "Pure": "capas/pure.jpg",
-    "Sonic & All-Stars Racing Transformed": "capas/sonic-all-stars-racing-transformed.jpg",
-    "Sonic & Sega All-Stars Racing": "capas/sonic-sega-all-stars-racing.jpg",
-    "Split/Second": "capas/split-second.jpg",
-    "Trials Fusion": "capas/trials-fusion.jpg",
-    "FIFA 15": "capas/fifa-15.jpg",
-    "FIFA 16": "capas/fifa-16.jpg",
-    "FIFA 18": "capas/fifa-18.jpg",
-    "FIFA 19": "capas/fifa-19.jpg",
-    "FIFA Street": "capas/fifa-street.jpg",
-    "FIFA Street 3": "capas/fifa-street-3.jpg",
-    "NBA 2K18": "capas/nba-2k18.jpg",
-    "PES 2006": "capas/pes-2006.jpg",
-    "PES 2012": "capas/pes-2012.jpg",
-    "PES 2014": "capas/pes-2014.jpg",
-    "PES 2016": "capas/pes-2016.jpg",
-    "PES 2017": "capas/pes-2017.jpg",
-    "PES 2018": "capas/pes-2018.jpg",
-    "PES 2025": "capas/pes-2025.jpg",
-    "Skate 3": "capas/skate-3.jpg",
-    "Top Spin 4": "capas/top-spin-4.jpg",
-    "UFC Undisputed 3": "capas/ufc-undisputed-3.jpg",
-    "WWE All Stars": "capas/wwe-all-stars.jpg",
-    "Bayonetta": "capas/bayonetta.jpg",
-    "Dead or Alive 5 Ultimate": "capas/dead-or-alive-5-ultimate.jpg",
-    "Dragon Ball: Raging Blast": "capas/dragon-ball-raging-blast.jpg",
-    "Dragon Ball: Raging Blast 2": "capas/dragon-ball-raging-blast-2.jpg",
-    "Dragon Ball: Xenoverse": "capas/dragon-ball-xenoverse.jpg",
-    "Dragon Ball Z: Battle of Z": "capas/dragon-ball-z-battle-of-z.jpg",
-    "Dragon Ball Z: Budokai HD Collection": "capas/dragon-ball-z-budokai-hd-collection.jpg",
-    "Dragon Ball Z: Ultimate Tenkaichi": "capas/dragon-ball-z-ultimate-tenkaichi.jpg",
-    "Injustice: Gods Among Us – Ultimate Edition": "capas/injustice-gods-among-us-ultimate-edition.jpg",
-    "Marvel vs. Capcom 3: Fate of Two Worlds": "capas/marvel-vs-capcom-3-fate-of-two-worlds.jpg",
-    "Mortal Kombat – Komplete Edition": "capas/mortal-kombat-komplete-edition.jpg",
-    "Mortal Kombat vs. DC Universe": "capas/mortal-kombat-vs-dc-universe.jpg",
-    "Naruto Shippuden: Ultimate Ninja Storm": "capas/naruto-shippuden-ultimate-ninja-storm.jpg",
-    "Persona 4 Arena Ultimax": "capas/persona-4-arena-ultimax.jpg",
-    "SoulCalibur V": "capas/soulcalibur-v.jpg",
-    "Street Fighter IV": "capas/street-fighter-iv.jpg",
-    "Street Fighter X Tekken": "capas/street-fighter-x-tekken.jpg",
-    "Tekken 6": "capas/tekken-6.jpg",
-    "Ultimate Marvel vs. Capcom 3": "capas/ultimate-marvel-vs-capcom-3.jpg",
-    "Dark Souls": "capas/dark-souls.jpg",
-    "Dark Souls II": "capas/dark-souls-ii.jpg",
-    "Dead Island": "capas/dead-island.jpg",
-    "Diablo III: Reaper of Souls": "capas/diablo-iii-reaper-of-souls.jpg",
-    "Fallout 3": "capas/fallout-3.jpg",
-    "Half-Life 2": "capas/half-life-2.jpg",
-    "Overlord": "capas/overlord.jpg",
-    "Resident Evil 4 HD": "capas/resident-evil-4-hd.jpg",
-    "Resident Evil 5": "capas/resident-evil-5.jpg",
-    "Resident Evil 6": "capas/resident-evil-6.jpg",
-    "Resident Evil HD Remaster": "capas/resident-evil-hd-remaster.jpg",
-    "Resident Evil Revelations 2": "capas/resident-evil-revelations-2.jpg",
-    "Shadows of the Damned": "capas/shadows-of-the-damned.jpg",
-    "The Elder Scrolls V: Skyrim": "capas/the-elder-scrolls-v-skyrim.jpg",
-    "The Walking Dead": "capas/the-walking-dead.jpg",
-    "Brunswick Pro Bowling": "capas/brunswick-pro-bowling.jpg",
-    "Cabela's Adventure Camp": "capas/cabela-s-adventure-camp.jpg",
-    "Dance Central": "capas/dance-central.jpg",
-    "Dance Central 2": "capas/dance-central-2.jpg",
-    "Dance Central 3": "capas/dance-central-3.jpg",
-    "Fable: The Journey": "capas/fable-the-journey.jpg",
-    "Fighters Uncaged": "capas/fighters-uncaged.jpg",
-    "Fruit Ninja Kinect": "capas/fruit-ninja-kinect.jpg",
-    "Harry Potter for Kinect": "capas/harry-potter-for-kinect.jpg",
-    "Ice Age: Continental Drift – Arctic Games": "capas/ice-age-continental-drift-arctic-games.jpg",
-    "Just Cause 2": "capas/just-cause-2.jpg",
-    "Just Dance 3": "capas/just-dance-3.jpg",
-    "Just Dance 2016": "capas/just-dance-2016.jpg",
-    "Just Dance 2017": "capas/just-dance-2017.jpg",
-    "Just Dance 2018": "capas/just-dance-2018.jpg",
-    "Just Dance 2019": "capas/just-dance-2019.jpg",
-    "Just Dance: Disney Party 2": "capas/just-dance-disney-party-2.jpg",
-    "Kinect Adventures!": "capas/kinect-adventures.jpg",
-    "Kinect Disneyland Adventures": "capas/kinect-disneyland-adventures.jpg",
-    "Kinect Rush: A Disney•Pixar Adventure": "capas/kinect-rush-a-disneypixar-adventure.jpg",
-    "Kinect Sesame Street TV": "capas/kinect-sesame-street-tv.jpg",
-    "Kinect Sesame Street TV Season Two": "capas/kinect-sesame-street-tv-season-two.jpg",
-    "Kinect Sports: Ultimate Collection": "capas/kinect-sports-ultimate-collection.jpg",
-    "Kinect Training": "capas/kinect-training.jpg",
-    "London 2012: The Official Video Game of the Olympic Games": "capas/london-2012-the-official-video-game-of-the-olympic-games.jpg",
-    "Marvel Avengers: Battle for Earth": "capas/marvel-avengers-battle-for-earth.jpg",
-    "Michael Phelps: Push the Limit": "capas/michael-phelps-push-the-limit.jpg",
-    "Puss in Boots": "capas/puss-in-boots.jpg",
-    "Rabbids Invasion: The Interactive TV Show": "capas/rabbids-invasion-the-interactive-tv-show.jpg",
-    "UFC Personal Trainer: The Ultimate Fitness System": "capas/ufc-personal-trainer-the-ultimate-fitness-system.jpg",
-    "Your Shape: Fitness Evolved 2012": "capas/your-shape-fitness-evolved-2012.jpg",
-    "Zumba Fitness: World Party": "capas/zumba-fitness-world-party.jpg",
-    "Zumba Kids": "capas/zumba-kids.jpg",
-    "Angry Birds Trilogy": "capas/angry-birds-trilogy.jpg",
-    "Bakugan: Battle Brawlers": "capas/bakugan-battle-brawlers.jpg",
-    "Banjo-Kazooie: Nuts & Bolts": "capas/banjo-kazooie-nuts-bolts.jpg",
-    "Barbie & Her Sisters": "capas/barbie-her-sisters.jpg",
-    "Barbie & Her Sisters: Puppy Rescue": "capas/barbie-her-sisters-puppy-rescue.jpg",
-    "Ben 10: Omniverse": "capas/ben-10-omniverse.jpg",
-    "Capcom Digital Collection": "capas/capcom-digital-collection.jpg",
-    "Cars": "capas/cars.jpg",
-    "Cars 2": "capas/cars-2.jpg",
-    "Cars 3: Driven to Win": "capas/cars-3-driven-to-win.jpg",
-    "Cartoon Network: Punch Time Explosion XL": "capas/cartoon-network-punch-time-explosion-xl.jpg",
-    "Castle of Illusion Starring Mickey Mouse": "capas/castle-of-illusion-starring-mickey-mouse.jpg",
-    "Costume Quest 2": "capas/costume-quest-2.jpg",
-    "Crash of the Titans": "capas/crash-of-the-titans.jpg",
-    "Digimon All-Star Rumble": "capas/digimon-all-star-rumble.jpg",
-    "Disney Infinity": "capas/disney-infinity.jpg",
-    "DreamWorks Bee Movie Game": "capas/dreamworks-bee-movie-game.jpg",
-    "DuckTales Remastered": "capas/ducktales-remastered.jpg",
-    "El Chavo Kart": "capas/el-chavo-kart.jpg",
-    "Epic Mickey 2: The Power of Two": "capas/epic-mickey-2-the-power-of-two.jpg",
-    "Family Guy: Back to the Multiverse": "capas/family-guy-back-to-the-multiverse.jpg",
-    "Harry Potter and the Half-Blood Prince": "capas/harry-potter-and-the-half-blood-prince.jpg",
-    "Ice Age 3: Dawn of the Dinosaurs": "capas/ice-age-3-dawn-of-the-dinosaurs.jpg",
-    "Joy Ride Turbo": "capas/joy-ride-turbo.jpg",
-    "Kung Fu Panda": "capas/kung-fu-panda.jpg",
-    "LEGO Batman": "capas/lego-batman.jpg",
-    "LEGO Batman 2: DC Super Heroes": "capas/lego-batman-2-dc-super-heroes.jpg",
-    "LEGO Batman 3: Beyond Gotham": "capas/lego-batman-3-beyond-gotham.jpg",
-    "LEGO Indiana Jones": "capas/lego-indiana-jones.jpg",
-    "LEGO Jurassic World": "capas/lego-jurassic-world.jpg",
-    "LEGO Marvel Avengers": "capas/lego-marvel-avengers.jpg",
-    "LEGO Marvel Super Heroes": "capas/lego-marvel-super-heroes.jpg",
-    "LEGO Star Wars II: The Original Trilogy": "capas/lego-star-wars-ii-the-original-trilogy.jpg",
-    "LEGO Star Wars: The Complete Saga": "capas/lego-star-wars-the-complete-saga.jpg",
-    "Madagascar 2": "capas/madagascar-2.jpg",
-    "Megamind": "capas/megamind.jpg",
-    "Minecraft": "capas/minecraft.jpg",
-    "Minecraft: Story Mode – Season Two": "capas/minecraft-story-mode-season-two.jpg",
-    "Monopoly Plus": "capas/monopoly-plus.jpg",
-    "MySims SkyHeroes": "capas/mysims-skyheroes.jpg",
-    "Pac-Man and the Ghostly Adventures 2": "capas/pac-man-and-the-ghostly-adventures-2.jpg",
-    "Phineas and Ferb: Quest for Cool Stuff": "capas/phineas-and-ferb-quest-for-cool-stuff.jpg",
-    "Ratatouille": "capas/ratatouille.jpg",
-    "Rayman Legends": "capas/rayman-legends.jpg",
-    "Rayman Origins": "capas/rayman-origins.jpg",
-    "Sonic Collection": "capas/sonic-collection.jpg",
-    "Sonic Free Riders": "capas/sonic-free-riders.jpg",
-    "Sonic Generations": "capas/sonic-generations.jpg",
-    "Sonic Unleashed": "capas/sonic-unleashed.jpg",
-    "Sonic's Ultimate Genesis Collection": "capas/sonic-s-ultimate-genesis-collection.jpg",
-    "Terraria": "capas/terraria.jpg",
-    "The Legend of Spyro: Dawn of the Dragon": "capas/the-legend-of-spyro-dawn-of-the-dragon.jpg",
-    "The Sims 3": "capas/the-sims-3.jpg",
-    "Toy Story Mania!": "capas/toy-story-mania.jpg",
+    // Você pode colocar exceções aqui se quiser:
+    // "Nome do Jogo": "capas/minha-capa.jpg"
 };
+
+let bancoCapasXbox360 = [];
+
+function normalizarNome(nome) {
+    return nome
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase()
+        .replace(/&/g, "and")
+        .replace(/[’']/g, "")
+        .replace(/[^a-z0-9]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
 
 function criarCapaFallback(jogo) {
     const svg = `
@@ -899,18 +639,102 @@ function criarCapaFallback(jogo) {
             <text x="50%" y="48%" text-anchor="middle" font-family="Arial"
                   font-size="22" font-weight="bold" fill="white">SEM CAPA</text>
             <text x="50%" y="54%" text-anchor="middle" font-family="Arial"
-                  font-size="15" fill="#00ff88">adicione a imagem na pasta capas</text>
+                  font-size="15" fill="#00ff88">adicione em /capas</text>
         </svg>`;
     return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
 }
 
+function nomeArquivoManual(jogo) {
+    return "capas/" + normalizarNome(jogo).replace(/ /g, "-") + ".jpg";
+}
+
+function procurarNoBanco(jogo) {
+    const alvo = normalizarNome(jogo);
+
+    // 1. Correspondência exata
+    let encontrado = bancoCapasXbox360.find(g =>
+        normalizarNome(g.title || "") === alvo && g.boxart
+    );
+    if (encontrado) return encontrado.boxart;
+
+    // 2. Alguns nomes da lista possuem edição/disco que não aparece na base.
+    const simplificado = alvo
+        .replace(/\bgoty\b/g, "")
+        .replace(/\bgame of the year edition\b/g, "")
+        .replace(/\bcomplete edition\b/g, "")
+        .replace(/\butimate edition\b/g, "")
+        .replace(/\bultimate\b/g, "")
+        .replace(/\bdisc [12]\b/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+
+    encontrado = bancoCapasXbox360.find(g => {
+        const t = normalizarNome(g.title || "");
+        return g.boxart && (t === simplificado || t.startsWith(simplificado) || simplificado.startsWith(t));
+    });
+
+    return encontrado ? encontrado.boxart : null;
+}
+
 function carregarCapa(jogo, img) {
+    // Exceção manual tem prioridade.
+    const manual = capasLocais[jogo];
+    const automatica = procurarNoBanco(jogo);
+
     img.onerror = function() {
         img.onerror = null;
+
+        // Se a capa automática falhar, tenta a manual pelo nome.
+        if (img.src !== manual && manual) {
+            img.src = manual;
+            return;
+        }
+
+        // Por último tenta /capas/nome-do-jogo.jpg
+        const arquivo = nomeArquivoManual(jogo);
+        if (!img.dataset.tentouManual) {
+            img.dataset.tentouManual = "1";
+            img.src = arquivo;
+            return;
+        }
+
         img.src = criarCapaFallback(jogo);
     };
-    img.src = capasLocais[jogo] || criarCapaFallback(jogo);
+
+    if (manual) {
+        img.src = manual;
+    } else if (automatica) {
+        img.src = automatica;
+    } else {
+        img.src = nomeArquivoManual(jogo);
+    }
 }
+
+async function carregarBancoDeCapas() {
+    try {
+        const resposta = await fetch(
+            "https://raw.githubusercontent.com/xenia-manager/x360db/main/games.json"
+        );
+
+        if (!resposta.ok) throw new Error("Não foi possível acessar a base de capas.");
+
+        bancoCapasXbox360 = await resposta.json();
+
+        // Depois que a base chega, atualiza as capas que ainda estavam sem imagem.
+        document.querySelectorAll(".game").forEach(div => {
+            const jogo = div.dataset.jogo;
+            const img = div.querySelector("img");
+
+            if (jogo && img) {
+                img.dataset.tentouManual = "";
+                carregarCapa(jogo, img);
+            }
+        });
+    } catch (erro) {
+        console.warn("Base x360db indisponível. Usando capas locais.", erro);
+    }
+}
+
 
 for (let categoria in categorias) {
 
@@ -967,6 +791,9 @@ for (let categoria in categorias) {
     bloco.appendChild(linha);
     container.appendChild(bloco);
 }
+
+// Carrega a base de capas depois que todos os jogos já estão na página.
+carregarBancoDeCapas();
 
 /* CONTADOR */
 function atualizarContador() {
