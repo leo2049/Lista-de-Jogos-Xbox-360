@@ -180,27 +180,42 @@ input {
 
 @media (max-width: 650px) {
     .games {
-        grid-template-columns: repeat(3, minmax(95px, 1fr));
-        gap: 9px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 7px;
+        padding: 5px 7px;
+    }
+
+    .game {
+        border-radius: 7px;
     }
 
     .game .nome-jogo {
-        font-size: .72rem;
-        min-height: 38px;
+        font-size: .60rem;
+        line-height: 1.1;
+        min-height: 32px;
+        padding: 5px 3px;
     }
 
     .game .marcador {
-        width: 25px;
-        height: 25px;
-        top: 5px;
-        right: 5px;
-        font-size: 15px;
+        width: 22px;
+        height: 22px;
+        top: 4px;
+        right: 4px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 400px) {
     .games {
-        grid-template-columns: repeat(2, minmax(110px, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 5px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .game .nome-jogo {
+        font-size: .55rem;
+        min-height: 29px;
     }
 }
 
