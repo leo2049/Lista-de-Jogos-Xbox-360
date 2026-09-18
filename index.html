@@ -45,12 +45,25 @@ body {
     object-fit: cover;
 }
 
+/* FACHADA / BANNER PRINCIPAL */
+.hero-banner {
+    width: 100%;
+    overflow: hidden;
+    background: #07150d;
+    border-bottom: 2px solid #00ff44;
+    box-shadow: 0 4px 18px rgba(0, 255, 68, .20);
+}
+
+.hero-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
 /* TÍTULO */
 h1 {
-    background: radial-gradient(circle at right, #107c10 0%, #0f2027 80%);
-    padding: 20px;
-    margin: 0;
-    font-size: 1.8rem;
+    display: none;
 }
 
 /* CATEGORIAS */
@@ -179,6 +192,11 @@ input {
 }
 
 @media (max-width: 650px) {
+    .hero-banner img {
+        width: 100%;
+        height: auto;
+    }
+
     .games {
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 7px;
@@ -250,7 +268,9 @@ button {
 <!-- CONTEÚDO -->
 <div id="conteudo" style="display:none;">
 
-<h1>🎮 Lista de Jogos Xbox 360</h1>
+<div class="hero-banner">
+    <img src="banner-xbox360.png" alt="Lista de Jogos Xbox 360">
+</div>
 
 <div class="container">
 
@@ -575,6 +595,7 @@ const categorias = {
 "Sonic Free Riders",
 "Sonic Generations",
 "Sonic Unleashed",
+"Sonic's Ultimate Genesis Collection",
 "Terraria",
 "The Legend of Spyro: Dawn of the Dragon",
 "The Sims 3",
@@ -608,11 +629,10 @@ As capas colocadas aqui SEMPRE têm prioridade sobre a busca automática.
 =========================================================
 */
 const capasManuais = {
-    // EXEMPLOS — troque pelos seus arquivos:
-    // "007 Quantum of Solace": "capas/007-quantum-of-solace.jpg",
-    // "Alan Wake": "capas/alan-wake.jpg",
-    // "Assassin's Creed": "capas/assassins-creed.jpg",
-    // "Grand Theft Auto V": "capas/gta-v.jpg"
+    // Coloque aqui somente as capas que você quiser definir manualmente.
+    // Elas têm prioridade TOTAL sobre a busca automática.
+    "Sonic & All-Stars Racing Transformed": "capas/sonic-all-stars-racing-transformed.jpg",
+    "Sonic & Sega All-Stars Racing": "capas/sonic-sega-all-stars-racing.jpg"
 };
 
 // Cache das capas encontradas automaticamente.
@@ -621,11 +641,10 @@ const capasManuais = {
    A base informa que cada jogo possui um Title ID e que o boxart pode
    ser carregado em /titles/{TitleID}/artwork/boxart.jpg.
 */
-
 const capasLocais = {
-    "Sonic & All-Stars Racing Transformed": "capas/sonic-all-stars-racing-transformed.jpg",
-    "Sonic & Sega All-Stars Racing": "capas/sonic-sega-all-stars-racing.jpg"
-};    
+    // Se algum jogo não for encontrado automaticamente, você pode colocar aqui:
+    // "Nome do Jogo": "capas/nome-da-capa.jpg"
+};
 
 let bancoCapasXbox360 = [];
 
@@ -690,15 +709,27 @@ function procurarNoBanco(jogo) {
 }
 
 function carregarCapa(jogo, img) {
-    // PRIORIDADE:
-    // 1) Capa colocada manualmente na pasta /capas
-    // 2) Capa automática da x360db
-    // 3) SEM CAPA
+    // PRIORIDADE ABSOLUTA: capasManuais / capasLocais.
+    const manual = capasManuais[jogo] || capasLocais[jogo];
 
-    const manual = capasLocais[jogo] || nomeArquivoManual(jogo);
+    if (manual) {
+        img.onerror = function() {
+            img.onerror = null;
+            carregarCapaAutomatica(jogo, img);
+        };
+        img.src = manual;
+        return;
+    }
+
+    carregarCapaAutomatica(jogo, img);
+}
+
+function carregarCapaAutomatica(jogo, img) {
+    // Primeiro tenta o nome convencional na pasta /capas, depois x360db.
+    const localAutomatica = nomeArquivoManual(jogo);
     const game = procurarNoBanco(jogo);
 
-    let urls = [manual];
+    let urls = [localAutomatica];
 
     if (game && game.id) {
         urls.push(
