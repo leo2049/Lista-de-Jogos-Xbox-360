@@ -9,7 +9,13 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    background:
+        linear-gradient(rgba(4,12,8,.30), rgba(4,12,8,.30)),
+        url("fundo-xbox360.png");
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
     color: white;
     text-align: center;
 }
@@ -49,11 +55,9 @@ body {
 .hero-banner {
     width: 100%;
     overflow: hidden;
-    background: #06110d;
+    background: #07150d;
     border-bottom: 2px solid #00ff44;
-    box-shadow: 0 4px 22px rgba(0, 255, 68, .24);
-    position: relative;
-    z-index: 1;
+    box-shadow: 0 4px 18px rgba(0, 255, 68, .20);
 }
 
 .hero-banner img {
@@ -95,11 +99,6 @@ input {
     margin: 15px;
     font-weight: bold;
     color: #00ff88;
-}
-
-#games {
-    position: relative;
-    z-index: 2;
 }
 
 /* LISTA DE CAPAS */
@@ -202,7 +201,6 @@ input {
     .hero-banner img {
         width: 100%;
         height: auto;
-        display: block;
     }
 
     .games {
@@ -723,7 +721,7 @@ function carregarCapa(jogo, img) {
     if (manual) {
         img.onerror = function() {
             img.onerror = null;
-            img.src = criarCapaFallback(jogo);
+            carregarCapaAutomatica(jogo, img);
         };
         img.src = manual;
         return;
